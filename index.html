@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-
 <head>
+  <!-- Github PAGES -->
   <!-- utf-8 is required for JS Plugin default fonts -->
   <meta charset="utf-8" />
   <meta name=“viewport” content=“width=device-width, initial-scale=1.0">
@@ -9,43 +9,28 @@
   <script type='text/javascript'>
 
 
-    (function () {
+    (function() {
       var vouched = Vouched({
-        // Optional verification properties.
+      // Optional verification properties.
         verification: {
           // verify the user's information 
-          firstName: 'Utility_Bill',
-          lastName: 'TEST',
+          firstName: 'Gladys',
+          lastName: 'West',
           // used for the crosscheck feature
           email: 'test@test.id',
           phone: '000-111-2222'
         },
-
-        liveness: 'straight',
-
-        type: 'id',
-
-        manualCaptureTimeout: 0,
-
-        numForceRetries: 0,
-
-        appId: 'Bo26EZbp7en~L.xvTZ!b*3jlR*TsF8', // VouchedDemo1 Public Sandbox Key
-        // your webhook for POST verification processing
+        liveness: 'mouth',
+        
+        appId: 'Bo26EZbp7en~L.xvTZ!b*3jlR*TsF8',
+       // your webhook for POST verification processing
         callbackURL: 'https://website.com/webhook',
-
-        sandbox: true,
 
         // mobile handoff
         crossDevice: true,
         crossDeviceQRCode: false,
         crossDeviceSMS: false,
-
-        // hide_upload
-
-        showUploadFirst: false,
-        face: 'camera',
-        id: 'camera',
-
+        
         // called when the verification is completed.
         onDone: (job) => {
           // token used to query jobs
@@ -56,35 +41,16 @@
           // 1. query jobs with the token
           // 2. store relevant job information such as the id and 
           //    success property into the user's profile
+          fetch(`/yourapi/idv?job_token=${job.token}`);
 
-          // Define API key to call photoURL
-          const auth = {
-            headers: {
-              'X-API-Key': 'wXD2r8-_p@_d~wHYAEz~R2V53ZYBLx'
-            }
-          }
-          // Fetch the photo URL for the completed job
-          fetch('https://verify.vouched.id/api/jobs?token=${job.token}&withPhotoUrls=true', auth)
-            // Handle success
-            .then(res => res.json())   // convert to json
-            .then(data => obj = data) // save data to obj var
-            .then(() => console.log(obj)) // print response to console
-            .catch(err => console.log('Request Failed', err)); // Catch errors
-
-          id_url = obj.items[0].request.parameters.idPhotoUrl; // set id_url
-          selfie_url = obj.items[0].request.parameters.userPhotoUrl; // set selfie_url
-
-          console.log("The ID file path is: ", id_url) // log id_url file path
-          console.log("The Selfie file path is: ", selfie_url) // log selfire_url file path 
-
-          // Log based on the job success
-          if (job.result.success) {
-            console.log("Job successful.");
-          } else {
-            console.log("Job failed.");
+          // Redirect to the next page based on the job success
+          if( job.result.success){
+            window.location.replace("https://website.com/success/");
+          }else{
+            window.location.replace("https://website.com/failed/");
           }
         },
-
+        
         // theme
         theme: {
           name: 'verbose',
@@ -95,9 +61,7 @@
 
   </script>
 </head>
-
 <body>
-  <div id='vouched-element' style="height: 100%" />
+  <div id='vouched-element' style="height: 100%"/>
 </body>
-
 </html>
