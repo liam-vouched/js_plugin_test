@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- utf-8 is required for JS Plugin default fonts -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://static.vouched.id/widget/vouched-2.0.0.js"></script>
+
+    <script type="text/javascript">
+      //const onMessage = (message) => {
+        //const datamain = JSON.parse(message.data);
+        var vouched = Vouched({
+          // Optional verification properties.
+          verification: {
+            // verify the user's information
+            //firstName: datamain.fName,
+            //lastName: datamain.lName,
+            // used for the crosscheck feature
+            //email: datamain.email,
+            //phone: datamain.phone,
+            enableCrossCheck: true,
+            enableAAMVA: true,
+          },
+          content: {
+            upperFaceInstructions:
+              "Share a <b>quick video selfie</b> to confirm your identity.<br><br>",
+            lowerFaceInstructions:
+              "Please ensure your selfie is clear, unimpeded with a dark background and doesn't include the following:<br><br>",
+          },
+          type: "idv",
+          face: "camera",
+          id: "camera",
+          liveness: "orientation",
+          enableEyeCheck: true,
+          userConfirmation: {
+            confirmData: true,
+            confirmImages: true,
+          },
+          appId: '6soQ@hXVg6uqk9w_HgLTt0_qxMQH_*',
+        
+          maxRetriesBeforeNext: 2,
+          // your webhook for POST verification processing
+          callbackURL: "https://www.vouched.id/",
+
+          // called when the verification is completed.
+          onDone: (job) => {
+            // window.ReactNativeWebView.postMessage(JSON.stringify(job.token));
+            //window.ReactNativeWebView.postMessage(JSON.stringify(job.result));
+          },
+
+          // theme
+          theme: {
+            name: "verbose",
+            iconLabelColor: "#000",
+            bgColor: "#fff",
+            fontColor: "#2D3145",
+            iconColor: "#000",
+            navigationActiveBackground: "#2D3145",
+            navigationActiveText: "#2D3145",
+            navigationDisabledBackground: "#e0e0e0",
+            navigationDisabledText: "#e0e0e0",
+            iconBackground: "#e0e0e0",
+            secondaryButtonColor: "#2D3145",
+            progressIndicatorTextColor: "#2D3145",
+            baseColor: "#2D3145",
+            font: "Roboto-Regular",
+          },
+        });
+        vouched.mount("#vouched-element");
+      //};
+
+      //document.addEventListener("message", onMessage);
+      //window.addEventListener("message", onMessage);
+    </script>
+  </head>
+  <body>
+    <div id="vouched-element" style="height: 100%" />
+  </body>
+</html>
